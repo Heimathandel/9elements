@@ -1,0 +1,132 @@
+<md-dialog aria-label="{{'CREATE_HOTSPOT'|translate}}" class="spot-window"
+           ng-class="{'prod-dialog': hsCtrl.showProductDetails}">
+    <form ng-if="!hsCtrl.showProductDetails">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{hsCtrl.title}}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="hsCtrl.cancel()">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="{{'GENERAL_SPOT_TAB'|translate}}">
+                    <md-content>
+                        <div layout-md="column" class="md-padding">
+                            <md-input-container class="md-block" flex>
+                                <label>{{'SPOT_NAME'|translate}}</label>
+                                <input
+                                        ng-model="hsCtrl.hotspot.name"
+                                        maxlength="30"
+                                        ng-maxlength="30"
+                                        required>
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>{{'SPOT_TEXT'|translate}}</label>
+                                <textarea
+                                        ng-model="hsCtrl.hotspot.description"
+                                        maxlength="600"
+                                        md-maxlength="600"
+                                ></textarea>
+                            </md-input-container>
+                            <div class="group-block">
+                                <product-list
+                                        hotspot="hsCtrl.hotspot"
+                                        product-id="hsCtrl.curProductId"
+                                        product-name="hsCtrl.curProductName"
+                                        show-product-details="hsCtrl.showProductDetails"
+                                ></product-list>
+
+                                <h2 class="md-subhead">{{'SERVICEGROUP'|translate}}</h2>
+                                <md-chips
+                                        ng-model="hsCtrl.hotspot.service_list"
+                                        md-transform-chip="hsCtrl.transformChip($chip)"
+                                        md-autocomplete-snap
+                                        md-require-match="false">
+                                    <md-autocomplete
+                                            md-search-text="searchText"
+                                            md-items="item in hsCtrl.querySearch(searchText)"
+                                            md-item-text="item"
+                                            md-require-match="false"
+                                            placeholder="{{'FIND_SERVICE_GROUP'|translate}}">
+                                        <span md-highlight-text="searchText">{{item.name}}</span>
+                                    </md-autocomplete>
+                                    <md-chip-template>
+                                        <span>{{$chip.name}}</span>
+                                    </md-chip-template>
+                                </md-chips>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="{{'PICTURE_SPOT_TAB'|translate}}">
+                    <md-content class="md-padding">
+                        <gallery gallery-lists="hsCtrl.hotspot.info_spot_images" detailclick="false"></gallery>
+                        <div
+                                ng-if="hsCtrl.showAddButton()"
+                                ngf-drop="hsCtrl.addFiles()"
+                                ngf-select="hsCtrl.addFiles()"
+                                ng-model="hsCtrl.photos" class="upload-box pano-upl-btn"
+                                ngf-drag-over-class="'dragover'"
+                                ngf-multiple="false"
+                                ngf-allow-dir="true"
+                                accept="image/*"
+                                ngf-resize="{width: 1400}"
+                                ngf-resize-if="$width > 1400 || $height > 1400"
+                                ngf-pattern="'image/*'">+
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="{{'VIDEO_SPOT_TAB'|translate}}">
+                    <md-content class="md-padding">
+                        <md-input-container ng-if='hsCtrl.showAddVideoButton()' class="md-block">
+                            <label>{{'VIDEO_URL'|translate}}</label>
+                            <input ng-model="hsCtrl.video.video_url">
+                        </md-input-container>
+                        <div
+                                ng-if="hsCtrl.showAddVideoButton() && !hsCtrl.video.video_url"
+                                ngf-drop="hsCtrl.addVideo()"
+                                ngf-select="hsCtrl.addVideo()"
+                                ng-model="hsCtrl.video"
+                                class="upload-box pano-upl-btn"
+                                ngf-drag-over-class="'dragover'"
+                                ngf-multiple="false"
+                                ngf-max-size="300MB"
+                                ngf-allow-dir="true"
+                                accept="video/*"
+                                ngf-pattern="'video/*'">+
+                        </div>
+                        <gallery gallery-lists="hsCtrl.hotspot.info_spot_videos" detailclick="false"></gallery>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class='md-primary md-raised md-warn' ng-click="hsCtrl.delete()" ng-if='hsCtrl.mode === "edit"'>
+                {{'DELETE'|translate}}
+            </md-button>
+
+            <md-button ng-click="hsCtrl.cancel()" class="md-primary md-raised md-warn btn-orange">
+                {{'CANCEL'|translate}}
+            </md-button>
+            <md-button
+                    ng-disabled="!hsCtrl.hotspot.name"
+                    ng-click="hsCtrl.ok()"
+                    class="md-primary md-raised text-white">
+                {{'SAVE_CHANGES'|translate}}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+    <product-details
+            ng-if="hsCtrl.showProductDetails && hsCtrl.curProductId"
+            product-id="hsCtrl.curProductId"
+            product-name="hsCtrl.curProductName"
+            hotspot="hsCtrl.hotspot"
+            product-list="hsCtrl.productDetailsList"
+            show-product-details="hsCtrl.showProductDetails">
+    </product-details>
+</md-dialog>
+

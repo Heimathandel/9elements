@@ -1,0 +1,78 @@
+<div layout="row" class="wrapper retailer-pn" layout-wrap>
+    <div flex="100" flex-gt-sm="70" flex-order="2" flex-order-gt-sm="1"
+         ng-show="panoECtrl.panoList.length && panoECtrl.activeSceneId">
+        <div class="wrapper-pano pano-content">
+            <div id="pano"></div>
+
+            <div class="spot-type" layout="row">
+                <label>{{'SPOT_TYPE'|translate}}:</label>
+                <md-radio-group ng-model="panoECtrl.spotType" layout="row" ng-change="panoECtrl.changeSpotType()">
+                    <md-radio-button value="info">{{'SPOT_TYPE_INFO'|translate}}</md-radio-button>
+                    <md-radio-button value="link" class="md-primary"> {{'LINKS'|translate}}</md-radio-button>
+                </md-radio-group>
+            </div>
+        </div>
+    </div>
+    <div flex="100" flex-gt-sm="30" flex-order="1" flex-order-gt-sm="2">
+        <ul class="panos-list" layout-gt-sm="column" layout="row">
+            <li
+                    class="pano-item"
+                    flex
+                    mg-padding
+                    ng-class="{'not-ready': panoItem.status !== 'ready'}"
+                    ng-repeat="panoItem in panoECtrl.panoList">
+        <span class="pano-delete-btn" ng-click="panoECtrl.deletePanoById(panoItem.id)">
+            <md-icon>close</md-icon>
+        </span>
+                <label flex
+                       for="pano-{{panoItem.id}}"
+                       class="upload-update-box">
+                    <md-icon>system_update_alt</md-icon>
+                    <input type="file"
+                           style="opacity: 0;"
+                           id="pano-{{panoItem.id}}"
+                           ngf-drop="panoECtrl.updatePanoImg(panoItem.id, panoECtrl.updatePicture)"
+                           ngf-select="panoECtrl.updatePanoImg(panoItem.id, panoECtrl.updatePicture)"
+                           ng-model="panoECtrl.updatePicture"
+                           ngf-drag-over-class="'dragover'"
+                           ngf-allow-dir="true"
+                           ngf-max-size="15MB"
+                           accept="image/*"
+                           ngf-pattern="'image/*'">
+                </label>
+                <img ng-if="panoItem.status === 'ready'" ng-click="panoECtrl.switchScene(panoItem)"
+                     ng-src="{{panoItem.panorama_files_url}}/fallback/f.jpg">
+
+                <div
+                        ng-if="panoItem.status === 'not_ready'"
+                        class="progress-block">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+                <div
+                        ng-if="panoItem.status === 'error'"
+                        class="error-block">
+                    <md-icon>error</md-icon>
+                </div>
+            </li>
+            <label flex
+                   for="pano-img"
+                   class="upload-box"
+                   ng-if="panoECtrl.panoList.length < 15">+
+                <input type="file"
+                       style="opacity: 0;"
+                       id="pano-img"
+                       ngf-drop="panoECtrl.uploadPano(panoECtrl.picture)"
+                       ngf-select="panoECtrl.uploadPano(panoECtrl.picture)"
+                       ngf-max-size="15MB"
+                       ng-model="panoECtrl.picture"
+                       ngf-drag-over-class="'dragover'"
+                       ngf-allow-dir="true"
+                       accept="image/*"
+                       ngf-pattern="'image/*'">
+            </label>
+        </ul>
+    </div>
+</div>
+
+
+

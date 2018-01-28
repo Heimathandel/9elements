@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Bearbeite {{child.firstname}}
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <ion-grid class="bt-centered">
+    <ion-row style="width:100%">
+      <ion-col text-center *ngIf="child.firstname">
+        <img class="circle-pic bt-margin-bottom-20px" [src]="child.imageUrl||'assets/images/sample-baby.PNG'"/>
+        <p *ngIf="memoryCount!=1" text-center>Du hast {{memoryCount}} Erinnerungen mit {{child.firstname}}</p>
+        <p *ngIf="memoryCount==1" text-center>Du hast {{memoryCount}} Erinnerung mit {{child.firstname}}</p>
+        <p *ngIf="stillToDo!=0" text-center>
+          Noch {{stillToDo}} {{memories}} für ein neues Fotobuch</p>
+        <p *ngIf="stillToDo==0" text-center>Glückwunsch! Du hast genug Erinnerungen für eine neues Fotobuch!</p>
+
+        <!--TODO: Edit fields enabled and save fnct-->
+
+        <ion-list>
+          <ion-item>
+            <ion-icon name="bt-geburtsdatum" item-start></ion-icon>
+            {{child.birthDate|date:'HH:mm'}} Uhr
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name="bt-groesse" item-start></ion-icon>
+            {{child.bHeight}} cm
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name="bt-gewicht-2" item-start></ion-icon>
+            {{child.bWeight}} g
+          </ion-item>
+        </ion-list>
+
+      </ion-col>
+      <ion-col text-center *ngIf="!child.firstname">
+        <p>Noch kein Kind angelegt.</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

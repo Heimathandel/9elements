@@ -1,0 +1,43 @@
+<md-dialog aria-label="{{'CREATE_HOTSPOT'|translate}}">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{hsLinkCtrl.title}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="hsLinkCtrl.cancel()">
+          <md-icon>close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <md-content class="md-padding">
+        <div layout-md="column" class="md-padding">
+          <p style="margin-top: 0;">{{'SELECT_SCENE'|translate}}</p>
+          <md-radio-group ng-model="hsLinkCtrl.hotspot.ref_pano_id" class="group-scene">
+            <md-radio-button ng-repeat="scene in hsLinkCtrl.scenes"
+                             ng-value="scene.id"
+                             ng-if="scene.status === 'ready'"
+                             aria-label="{{scene.id}}">
+              <md-icon>
+                <img ng-src="{{scene.panorama_files_url}}/fallback/f.jpg">
+              </md-icon>
+            </md-radio-button>
+          </md-radio-group>
+        </div>
+      </md-content>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class='md-primary md-raised md-warn' ng-click="hsLinkCtrl.delete()" ng-if='hsLinkCtrl.mode === "edit"'>
+        {{'DELETE'|translate}}
+      </md-button>
+      <md-button class="md-primary md-raised md-warn btn-orange" ng-click="hsLinkCtrl.cancel()">
+        {{'CANCEL'|translate}}
+      </md-button>
+      <md-button class="md-primary md-raised text-white" ng-click="hsLinkCtrl.ok()">
+        {{'Ok'|translate}}
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Weitere Informationen
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <form (ngSubmit)="saveChild()" #newChildForm="ngForm">
+      <ion-list radio-group [(ngModel)]="child.gender" name="gender">
+        <ion-item>
+          <ion-label>Junge</ion-label>
+          <ion-radio value=true></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Mädchen</ion-label>
+          <ion-radio checked="true" value=false></ion-radio>
+        </ion-item>
+      </ion-list>
+      <ion-item>
+        <ion-label color="primary" floating>Uhrzeit</ion-label>
+        <ion-datetime
+          displayFormat="HH:mm" pickerFormat="HH mm" cancelText="Abbruch" doneText="Fertig"
+          name="birthDate" [(ngModel)]="child.birthDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" floating>Gewicht bei Geburt (g)</ion-label>
+        <ion-input type="number" name="bWeight" [(ngModel)]="child.bWeight"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" floating>Größe bei der Geburt (cm)</ion-label>
+        <ion-input type="number" name="bHeight" [(ngModel)]="child.bHeight"></ion-input>
+      </ion-item>
+      <ion-row text-center="">
+        <button ion-button block class="submit-btn" type="submit" [disabled]="!newChildForm.form.valid">erstellen
+        </button>
+      </ion-row>
+    </form>
+  </ion-grid>
+</ion-content>

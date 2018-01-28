@@ -1,0 +1,40 @@
+<!--
+  Start page
+  @author Nils Widal
+  @version 0.0.1
+-->
+
+<ion-content text-center class="vertical-align-content" padding>
+  <div class="bt-top-branch"><img src='assets/icon/tree-oben.png'></div>
+  <div class="bt-bottom-branch"><img src='assets/icon/tree-unten.png'></div>
+  <img src="assets/images/sample-logo.PNG" style="margin-top:70px; max-height:10vh; width:auto;"/>
+  <h1>BubbleTree</h1>
+  <p *ngIf="!childs.length">Erstelle Dein Kind</p>
+  <ion-grid class="bt-centered">
+    <ion-scroll scrollY="true">
+      <ion-row padding-top="30px;">
+        <ion-col>
+          <ion-list class="bt-list">
+            <ion-item *ngFor="let child of childs; let i = index" style="max-width:300px;">
+              <ion-avatar item-start (click)="goToChild(i)">
+                <img [src]="child.imageUrl||'assets/images/sample-baby.PNG'" alt="{{child.firstname}}">
+              </ion-avatar>
+              <h2 (click)="goToChild(i)">{{child.firstname}} {{child.lastname}}</h2>
+              <p (click)="goToChild(i)">{{child.birthDate|date:'dd.MM.yyyy'}}</p>
+              <ion-note item-end (click)="openEditChildModal(child)">
+                <ion-icon name="brush" color="danger"></ion-icon>
+              </ion-note>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-scroll>
+    <ion-row>
+      <ion-fab center>
+        <button ion-fab color="dark" large (click)="openCreateChildModal()">
+          <ion-icon name="add" color="extra-light"></ion-icon>
+        </button>
+      </ion-fab>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Dein Kind
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row style="margin-bottom:50px;">
+      <ion-fab center margin-top="20px" *ngIf="!child.imageUrl">
+        <button ion-fab color="primary" large (click)="presentActionSheet()">
+          <ion-icon name="person"></ion-icon>
+        </button>
+      </ion-fab>
+      <img class="circle-pic" margin-top="20px" *ngIf="child.imageUrl" src="{{child.imageUrl}}">
+    </ion-row>
+    <form (ngSubmit)="saveChild()" #newChildForm="ngForm">
+      <ion-item>
+        <ion-label color="primary" floating>Vorname *</ion-label>
+        <ion-input name="name" [(ngModel)]="child.firstname" clearInput="true" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" floating>Nachname</ion-label>
+        <ion-input name="lastname" [(ngModel)]="child.lastname" clearInput="true"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" floating>Geburtstag *</ion-label>
+        <ion-datetime
+          monthNames="Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember"
+          displayFormat="DD.MM.YYYY" pickerFormat="DD MMMM YYYY" cancelText="Abbruch" doneText="Fertig"
+          name="birthDate" [(ngModel)]="child.birthDate" required></ion-datetime>
+      </ion-item>
+      <ion-row text-center="">
+        <button ion-button block class="submit-btn" type="submit" [disabled]="!newChildForm.form.valid">erstellen
+        </button>
+      </ion-row>
+    </form>
+  </ion-grid>
+</ion-content>
